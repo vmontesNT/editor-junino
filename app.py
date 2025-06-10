@@ -77,12 +77,13 @@ with col1:
 with col2:
     # FONTES COMPATÍVEIS COM UTF-8 (ACENTOS)
     font_options = {
-        "DejaVu Sans (Recomendada)": "DejaVuSans.ttf",  # Fonte compatível com UTF-8
-        "Arial": "arial.ttf",
-        "Times New Roman": "times.ttf",
-        "Comic Sans MS": "comic.ttf",
-        "Impact": "impact.ttf",
-        "Courier New": "cour.ttf"
+        "DejaVu Sans (Recomendada)": "DejaVuSans.ttf",
+        "Open Sans": "OpenSans-Regular.ttf",
+        "Roboto": "Roboto-Regular.ttf",
+        "Ubuntu": "Ubuntu-Regular.ttf",
+        "Noto Sans": "NotoSans-Regular.ttf",
+        "Montserrat": "Montserrat-Regular.ttf",
+        "Lato": "Lato-Regular.ttf"
     }
     selected_font = st.selectbox("Fonte:", list(font_options.keys()), index=0)
     
