@@ -45,7 +45,6 @@ def load_colaborador():
 
 col_img = load_colaborador()
 
-
 # 3) Frase pronta: seleção de frases
 frases_juninas = [
     "No arraiá da Gepes Atendimento, você é uma estrela brilhante da nossa fogueira!",
@@ -63,7 +62,6 @@ frases_juninas = [
     "A equipe solução balançou meu coração. Ter você você na equipe vale mais que 1 milhão",
     "Passando para agradecer por tudo! Trabalhar contigo é bão demais! ",
     "Analisei todas as planilhas, dados e informações,  hoje eu tenho certeza: Você é sensacional! "
-    
 ]
 frase_selecionada = st.selectbox("Escolha uma frase:", frases_juninas)
 
@@ -77,14 +75,16 @@ with col1:
     text_color = st.color_picker("Cor do texto:", "#FFFFFF")  # Branco como padrão
     
 with col2:
+    # FONTES COMPATÍVEIS COM UTF-8 (ACENTOS)
     font_options = {
+        "DejaVu Sans (Recomendada)": "DejaVuSans.ttf",  # Fonte compatível com UTF-8
         "Arial": "arial.ttf",
         "Times New Roman": "times.ttf",
         "Comic Sans MS": "comic.ttf",
         "Impact": "impact.ttf",
         "Courier New": "cour.ttf"
     }
-    selected_font = st.selectbox("Fonte:", list(font_options.keys()))
+    selected_font = st.selectbox("Fonte:", list(font_options.keys()), index=0)
     
 with col3:
     font_size = st.slider("Tamanho da fonte:", 20, 60, 32)
@@ -169,16 +169,21 @@ if col_img:
 
 if frase_selecionada:
     try:
-        # Tenta carregar a fonte selecionada
+        # CORREÇÃO: Especificar encoding UTF-8 explicitamente
         font_path = font_options[selected_font]
-        font = ImageFont.truetype(font_path, font_size)
+        font = ImageFont.truetype(font_path, font_size, encoding="unic")
     except:
         try:
-            # Fallback para Arial se a fonte selecionada falhar
-            font = ImageFont.truetype("arial.ttf", font_size)
+            # Fallback para fonte UTF-8
+            font = ImageFont.truetype("DejaVuSans.ttf", font_size, encoding="unic")
         except:
-            # Fallback final para fonte padrão
-            font = ImageFont.load_default().font_variant(size=font_size)
+            try:
+                # Fallback para Arial
+                font = ImageFont.truetype("arial.ttf", font_size, encoding="unic")
+            except:
+                # Fallback final para fonte padrão com encoding
+                font = ImageFont.load_default()
+                # Ajuste para tamanho (não suportado nativamente)
     
     # Área de texto com margens e ajuste vertical
     text_area_width = canvas_1.width - 100
@@ -208,13 +213,17 @@ if col_img:
 
 if frase_selecionada:
     try:
+        # CORREÇÃO: Mesmo tratamento de encoding
         font_path = font_options[selected_font]
-        font = ImageFont.truetype(font_path, font_size)
+        font = ImageFont.truetype(font_path, font_size, encoding="unic")
     except:
         try:
-            font = ImageFont.truetype("arial.ttf", font_size)
+            font = ImageFont.truetype("DejaVuSans.ttf", font_size, encoding="unic")
         except:
-            font = ImageFont.load_default().font_variant(size=font_size)
+            try:
+                font = ImageFont.truetype("arial.ttf", font_size, encoding="unic")
+            except:
+                font = ImageFont.load_default()
     
     text_area_width = canvas_2.width - 100
     text_area_x = 50
